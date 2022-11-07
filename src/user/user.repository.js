@@ -1,5 +1,5 @@
-const { json } = require("body-parser");
-const { User } = require("../database/models");
+const { json } = require('body-parser');
+const { User } = require('../database/models');
 
 const createUser = async ({ fullname, email, password }) => {
   const isUserExists = await User.findOne({ where: { email }, raw: true });
@@ -10,7 +10,7 @@ const createUser = async ({ fullname, email, password }) => {
       password,
     });
   } else {
-    return json({ message: error.message });
+    return { message: 'User already exist!' };
   }
 };
 
@@ -45,7 +45,7 @@ const updateUser = async ({ userId, fullname, email, password }) => {
 const updatePassword = async ({ userId, password }) => {
   return await User.update(
     {
-      password
+      password,
     },
     {
       where: {
